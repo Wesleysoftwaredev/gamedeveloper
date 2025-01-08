@@ -45,6 +45,13 @@ while True:
         namcon = input("Enter the name of the country")
         print (dict2.get(namcon, "Does not exist"))
 
+    elif cond1=="4":
+        country = input("Which country do you want to be deleted?")
+        if country in dict2.keys():
+            del country
+        else:
+            print ("It does not exist")
 
+        
     elif cond1=="5":
         break
