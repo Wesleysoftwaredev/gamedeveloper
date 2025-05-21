@@ -34,12 +34,12 @@ def draw():
     screen.draw.filled_rect(skipbox, "brown")
     scrollerboxmsg=f"Welcome to the quiz master -{question_num}/{question_max}"
     screen.draw.textbox(scrollerboxmsg, scrollerbox, color="black")
-    screen.draw.textbox(each_q[0], questionbox, color="white")
+    screen.draw.textbox(each_q[0].strip(), questionbox, color="white")
     screen.draw.textbox(str(totaltime), timerbox, color="black")
     screen.draw.textbox("skip", skipbox, color="black")
     index = 1
     for i in optionlist:
-        screen.draw.textbox(each_q[index], i, color="white")
+        screen.draw.textbox(each_q[index].strip(), i, color="white")
         index+=1
 
 
@@ -70,6 +70,35 @@ def game_over():
     each_q = [finalmsg, "-", "-", "-", "-", 7]
     totaltime = 0
     gamefinished = True
+
+def on_mouse_down(pos):
+    index = 1
+    for i in optionlist:
+        if i.collidepoint(pos):
+            if index is int(each_q[5]):
+                c_answer()
+            else:
+                game_over()
+        index+=1
+    if skipbox.collidepoint(pos):
+        skip_question()
+def c_answer():
+    global each_q, load_q, totaltime, score
+    score+=1
+    if questions:
+        each_q=load_q()
+        totaltime=15 
+    else:
+        game_over()
+
+def skip_question():
+    global each_q, load_q, totaltime
+    if questions:
+        each_q=load_q()
+        totaltime=15 
+    else:
+        game_over()
+ 
 
 
 info()
